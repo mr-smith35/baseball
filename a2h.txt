@@ -1,0 +1,9 @@
+Lightning,0,0,0,0,0,0,0,0
+Bobby Cinnamon,0,0,0,0,0,0,0,0
+Michael Cinnamon,0,0,0,0,0,0,0,0
+The Truck,0,0,0,0,0,0,0,0
+The Giant,0,0,0,0,0,0,0,0
+Smack,0,0,0,0,0,0,0,0
+Hitty,0,0,0,0,0,0,0,0
+Jack Cinnamon,0,0,0,0,0,0,0,0
+Billy,0,0,0,0,0,0,0,0

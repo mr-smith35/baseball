@@ -221,16 +221,6 @@ public class BaseballGame {
 
 				int result = calculateResult(homeTeam.hitters[currentBatterHome], awayTeamPitcher);
 				if(result == OUT) {
-					int rand = (int)(Math.random()*3);
-					if(rand == 0) {
-						System.out.println(homeTeam.hitters[currentBatterHome].name + " grounds out!");
-					}
-					else if(rand == 1) {
-						System.out.println(homeTeam.hitters[currentBatterHome].name + " flies out!");
-					}
-					else {
-						System.out.println(homeTeam.hitters[currentBatterHome].name + " strikes out!!!");
-					}
 					numberOfOuts++;
 				}
 				else {
@@ -264,16 +254,6 @@ public class BaseballGame {
 
 				int result = calculateResult(awayTeam.hitters[currentBatterAway], homeTeamPitcher);
 				if(result == OUT) {
-					int rand = (int)(Math.random()*3);
-					if(rand == 0) {
-						System.out.println(awayTeam.hitters[currentBatterAway].name + " grounds out!");
-					}
-					else if(rand == 1) {
-						System.out.println(awayTeam.hitters[currentBatterAway].name + " flies out!");
-					}
-					else {
-						System.out.println(awayTeam.hitters[currentBatterAway].name + " strikes out!!!");
-					}
 					numberOfOuts++;
 				}
 				else {
@@ -535,7 +515,19 @@ public class BaseballGame {
 			return SINGLE;
 		}
 		else {  //it's an out
-			return OUT;  // return 0
+			int rand = (int)(Math.random()*3);
+			if(rand == 0) {
+				System.out.println(h.name + " grounds out!");
+			}
+			else if(rand == 1) {
+				System.out.println(h.name + " flies out!");
+			}
+			else {
+				System.out.println(h.name + " strikes out!!!");
+			}
+
+			return OUT;
+				
 		}
 	}
 	

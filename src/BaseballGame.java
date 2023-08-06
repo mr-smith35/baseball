@@ -487,8 +487,11 @@ public class BaseballGame {
 		//System.out.println("adjustedBattingAverage: " + adjustedBattingAverage);
 		
 		h.stats.atBats++;  
-		
-		if(rand < adjustedBattingAverage) { // it's a hit
+
+		if(isWalk(p)) {
+
+		}
+		else if(rand < adjustedBattingAverage) { // it's a hit
 			h.stats.hits++;
 			int rand2 = (int)(Math.random()*1000) + 1;  
 			// check if it's a home run
@@ -529,6 +532,10 @@ public class BaseballGame {
 			return OUT;
 				
 		}
+	}
+
+	private boolean isWalk(Pitcher p){
+		
 	}
 	
 	private String getRandomAdjective() {

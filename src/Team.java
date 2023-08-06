@@ -4,4 +4,9 @@ public class Team {
 	Pitcher[] pitchers = new Pitcher[5];
 	String teamName;
 	String managerName;
+	
+	int wins;
+	int losses;
+	
+	
 }

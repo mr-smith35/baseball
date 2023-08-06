@@ -15,7 +15,7 @@ public class BaseballGame {
 	int homeTeamScore = 0;
 	int awayTeamScore = 0;
 
-	final int OUT = 0, SINGLE = 1, DOUBLE = 2, TRIPLE = 3, HOME_RUN = 4;
+	final int OUT = 0, SINGLE = 1, DOUBLE = 2, TRIPLE = 3, HOME_RUN = 4, WALK = 5;
 	final int FIRST_BASE = 0, SECOND_BASE = 1, THIRD_BASE = 2;
 
 	public void startGame() {
@@ -45,10 +45,7 @@ public class BaseballGame {
 			playInning(false, inning);
 			playInning(true, inning);
 			if(inning >= 9 && homeTeamScore > awayTeamScore ) {
-				System.out.println("*** 2"
-						+ "0"
-						+ ""
-						+ " OVER!!! ***"); // game is over
+				System.out.println("*** GAME OVER!!! ***"); // game is over
 				System.out.println("*** The " + homeTeam.teamName + " win, "
 						+ homeTeamScore + " to " + awayTeamScore + "***"); // game is over
 				break;  // exit loop
@@ -153,26 +150,39 @@ public class BaseballGame {
 	
 	private void printSeasonStats() {
 		System.out.println("************************* Season Stats *************************");
-		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s\n", homeTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "RBIs");
+		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9s%-9s%-9s\n", homeTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "RBIs", "Avg", "Slugging", "OPS");
 		for(int i = 0; i < homeTeam.hitters.length; i++) {
-			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s", (i+1) + ") " + homeTeam.hitters[i].name, homeTeam.hitters[i].seasonStats.atBats,
+			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9.3f%-9.3f%-9.3f", (i+1) + ") " + homeTeam.hitters[i].name, homeTeam.hitters[i].seasonStats.atBats,
 					homeTeam.hitters[i].seasonStats.runs, homeTeam.hitters[i].seasonStats.hits, homeTeam.hitters[i].seasonStats.singles, homeTeam.hitters[i].seasonStats.doubles,
-					homeTeam.hitters[i].seasonStats.triples, homeTeam.hitters[i].seasonStats.homeRuns, homeTeam.hitters[i].seasonStats.runsBattedIn);
+					homeTeam.hitters[i].seasonStats.triples, homeTeam.hitters[i].seasonStats.homeRuns, homeTeam.hitters[i].seasonStats.runsBattedIn,
+					(double)homeTeam.hitters[i].seasonStats.hits/homeTeam.hitters[i].seasonStats.atBats, calculateSluggingAvg(homeTeam.hitters[i].seasonStats),
+																										calculateOPS(homeTeam.hitters[i].seasonStats));
 			System.out.println();
 		}
 		
 		System.out.println();
 
-		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s\n", awayTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "RBIs");
+		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9s%-9s%-9s\n", awayTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "RBIs", "Avg", "Slugging", "OPS");
 		for(int i = 0; i < awayTeam.hitters.length; i++) {
-			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s", (i+1) + ") " + awayTeam.hitters[i].name, awayTeam.hitters[i].seasonStats.atBats,
+			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9.3f%-9.3f%-9.3f", (i+1) + ") " + awayTeam.hitters[i].name, awayTeam.hitters[i].seasonStats.atBats,
 					awayTeam.hitters[i].seasonStats.runs, awayTeam.hitters[i].seasonStats.hits, awayTeam.hitters[i].seasonStats.singles, awayTeam.hitters[i].seasonStats.doubles,
-					awayTeam.hitters[i].seasonStats.triples, awayTeam.hitters[i].seasonStats.homeRuns, awayTeam.hitters[i].seasonStats.runsBattedIn);
+					awayTeam.hitters[i].seasonStats.triples, awayTeam.hitters[i].seasonStats.homeRuns, awayTeam.hitters[i].seasonStats.runsBattedIn,
+					(double)awayTeam.hitters[i].seasonStats.hits/awayTeam.hitters[i].seasonStats.atBats, calculateSluggingAvg(awayTeam.hitters[i].seasonStats),
+					calculateOPS(awayTeam.hitters[i].seasonStats));
 			System.out.println();
 
 		}
 		System.out.println("************************* End Season Stats *************************");
-
+	}
+	
+	private double calculateSluggingAvg(SeasonStats s) {
+		double slugging = (1*s.singles + 2*s.doubles + 3*s.triples + 4*s.homeRuns)/(double)s.atBats;
+		return slugging;
+	}
+	
+	private double calculateOPS(SeasonStats s) {
+		double ops = (1*s.singles + 2*s.doubles + 3*s.triples + 4*s.homeRuns)/(double)s.atBats + (double)s.hits/s.atBats;
+		return ops;
 	}
 
 	private void playInning(boolean homeTeamAtBat, int inning) {

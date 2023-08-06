@@ -23,6 +23,7 @@ public class BaseballData {
 		crows.hitters[7] = new Hitter("Clover",200, 175, 330, 200);
 		crows.hitters[8] = new Hitter("Zachary",240, 170, 400, 510);
 
+												// control, speed, stamina
 		crows.pitchers[0] = new Pitcher("Joshua", 89, 85, 70 );
 		crows.pitchers[1] = new Pitcher("Yariv", 50, 70, 50 );
 		crows.pitchers[2] = new Pitcher("Zachary", 65, 65, 65 );

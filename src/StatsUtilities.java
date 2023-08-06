@@ -114,12 +114,6 @@ public class StatsUtilities {
 
 			BufferedWriter bw = new BufferedWriter(new FileWriter(home.teamName, true));
 			for(Hitter h : home.hitters) {
-				// Don't need to search array for match.
-				// the season stats and game stats are both set
-				// Just update season stats
-				
-				//AB   Runs Hits 1B   2B   3B   HR   RBIs 
-
 				h.seasonStats.atBats = h.seasonStats.atBats + h.stats.atBats;
 				h.seasonStats.runs = h.seasonStats.runs + h.stats.runs;
 				h.seasonStats.hits = h.seasonStats.hits + h.stats.hits;

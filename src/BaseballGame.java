@@ -128,21 +128,23 @@ public class BaseballGame {
 	}
 	
 	private void printScoreboard() {
-		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s\n", homeTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "BB", "HR", "RBIs");
+		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s\n", homeTeam.teamName, 
+				"AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "BB", "RBIs");
 		for(int i = 0; i < homeTeam.hitters.length; i++) {
 			GameStats s1 = homeTeam.hitters[i].stats;
 			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s", (i+1) + ") " + homeTeam.hitters[i].name, 
-					s1.atBats, s1.runs, s1.hits, s1.singles, s1.doubles, s1.triples, s1.walks, s1.homeRuns, s1.runsBattedIn);
+					s1.atBats, s1.runs, s1.hits, s1.singles, s1.doubles, s1.triples, s1.homeRuns, s1.walks, s1.runsBattedIn);
 			System.out.println();
 		}
 		
 		System.out.println();
 
-		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s\n", awayTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "BB", "HR", "RBIs");
+		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s\n", awayTeam.teamName, 
+				"AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "BB", "RBIs");
 		for(int i = 0; i < awayTeam.hitters.length; i++) {
 			GameStats s2 = awayTeam.hitters[i].stats;
-			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s", (i+1) + ") " + awayTeam.hitters[i].name, awayTeam.hitters[i].stats.atBats,
-					s2.atBats, s2.runs, s2.hits, s2.singles, s2.doubles, s2.triples, s2.walks, s2.homeRuns, s2.runsBattedIn);
+			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s", (i+1) + ") " + awayTeam.hitters[i].name, 
+					s2.atBats, s2.runs, s2.hits, s2.singles, s2.doubles, s2.triples, s2.homeRuns, s2.walks, s2.runsBattedIn);
 			System.out.println();
 
 		}
@@ -150,7 +152,8 @@ public class BaseballGame {
 	
 	private void printSeasonStats() {
 		System.out.println("************************* Season Stats *************************");
-		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9s%-9s%-9s%-9s\n", homeTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "BB", "RBIs", "Avg", "Slugging", "OBP", "OPS");
+		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9s%-9s%-9s%-9s\n", homeTeam.teamName,
+				"AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "BB", "RBIs", "Avg", "Slugging", "OBP", "OPS");
 		for(int i = 0; i < homeTeam.hitters.length; i++) {
 			SeasonStats s = homeTeam.hitters[i].seasonStats;
 			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9.3f%-9.3f%-9.3f%-9.3f", (i+1) + ") " + homeTeam.hitters[i].name, 
@@ -166,8 +169,8 @@ public class BaseballGame {
 		for(int i = 0; i < awayTeam.hitters.length; i++) {
 			SeasonStats s = awayTeam.hitters[i].seasonStats;
 
-			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9.3f%-9.3f%-9.3f%-9.3f", (i+1) + ") " + awayTeam.hitters[i].name, s.atBats,
-					s.runs, s.hits, s.singles, s.doubles, s.triples, s.homeRuns, s.walks, s.runsBattedIn,
+			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9.3f%-9.3f%-9.3f%-9.3f", (i+1) + ") " + awayTeam.hitters[i].name, 
+					s.atBats, s.runs, s.hits, s.singles, s.doubles, s.triples, s.homeRuns, s.walks, s.runsBattedIn,
 					calculateBattingAvg(s), calculateSluggingAvg(s), calculateOBP(s), calculateOPS(s));
 
 			System.out.println();
@@ -186,7 +189,7 @@ public class BaseballGame {
 	}
 	
 	private double calculateOBP(SeasonStats s) {
-		double obp = (s.walks + s.hits)/(s.walks + s.atBats);
+		double obp = (double)(s.walks + s.hits)/(s.walks + s.atBats);
 		return obp;
 	}
 	
@@ -231,7 +234,7 @@ public class BaseballGame {
 
 				int result = calculateResult(homeTeam.hitters[currentBatterHome], awayTeamPitcher);
 				if(result == WALK) {
-					System.out.println("stop here");				
+					System.out.println("*** stop ***");
 				}
 				if(result == OUT) {
 					numberOfOuts++;
@@ -265,10 +268,9 @@ public class BaseballGame {
 				diamond = diamond + "INNING: " + getInning(inning) + ", OUTS: " + numberOfOuts + ".";
 				System.out.println(diamond);
 
+
 				int result = calculateResult(awayTeam.hitters[currentBatterAway], homeTeamPitcher);
-				if(result == WALK) {
-					System.out.println("stop here");				
-				}
+
 				if(result == OUT) {
 					numberOfOuts++;
 				}

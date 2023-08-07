@@ -18,7 +18,7 @@ public class StatsUtilities {
 			} 
 
 		} catch (Exception e) {
-			System.out.println("##### Error while reading stats for " + home.teamName);
+			System.out.println("##### No season file detected, starting new season file for " + home.teamName);
 			//e.printStackTrace();
 		}
 		
@@ -34,7 +34,7 @@ public class StatsUtilities {
 			} 
 
 		} catch (Exception e) {
-			System.out.println("##### Error while reading stats for " + away.teamName);
+			System.out.println("##### No season file detected, starting new season file for " + away.teamName);
 			//e.printStackTrace();
 		}
 		
@@ -86,12 +86,17 @@ public class StatsUtilities {
 		s = s.substring(comma + 1);
 		
 		comma = s.indexOf(',');
+		int walks = Integer.parseInt(s.substring(0, comma));
+		//System.out.println("***walks " + rbis);
+		s = s.substring(comma + 1);
+		
+		comma = s.indexOf(',');
 		int rbis = Integer.parseInt(s.substring(0));
 		//System.out.println("***rbis " + rbis);
 		s = s.substring(comma + 1);
-		
-		//int atBats, int hits, int singles, int doubles, int triples, int hrs, int bbs, int rbis,int runs
-		return new SeasonStats(ab, hits, singles, doubles, triples, hrs, 0, rbis, runs);
+		 
+		//int atBats, int hits, int singles, int doubles, int triples, int hrs, int bbs, int rbis,int runs  ***?? order
+		return new SeasonStats(ab, hits, singles, doubles, triples, hrs, walks, rbis, runs);
 	}
 	
 	public static void printSeasonStats(Team home, Team away) {
@@ -123,11 +128,14 @@ public class StatsUtilities {
 				h.seasonStats.triples = h.seasonStats.triples + h.stats.triples;
 				
 				h.seasonStats.homeRuns = h.seasonStats.homeRuns + h.stats.homeRuns;
+				
+				h.seasonStats.walks = h.seasonStats.walks + h.stats.walks;
+				
 				h.seasonStats.runsBattedIn = h.seasonStats.runsBattedIn + h.stats.runsBattedIn;
 				
 				String s = h.name + "," + h.seasonStats.atBats + "," + h.seasonStats.runs + "," + h.seasonStats.hits + "," 
 						+ h.seasonStats.singles + "," + h.seasonStats.doubles + "," + h.seasonStats.triples + "," + h.seasonStats.homeRuns + 
-						"," + h.seasonStats.runsBattedIn;
+						"," + h.seasonStats.walks +  "," + h.seasonStats.runsBattedIn;
 				System.out.println(s);
 				bw.write(s);
 				bw.newLine();
@@ -159,12 +167,15 @@ public class StatsUtilities {
 				h.seasonStats.triples = h.seasonStats.triples + h.stats.triples;
 				
 				h.seasonStats.homeRuns = h.seasonStats.homeRuns + h.stats.homeRuns;
+				
+				h.seasonStats.walks = h.seasonStats.walks + h.stats.walks;
+
 				h.seasonStats.runsBattedIn = h.seasonStats.runsBattedIn + h.stats.runsBattedIn;
 				
 				
 				String s = h.name + "," + h.seasonStats.atBats + "," + h.seasonStats.runs + "," + h.seasonStats.hits + "," 
 						+ h.seasonStats.singles + "," + h.seasonStats.doubles + "," + h.seasonStats.triples + "," + h.seasonStats.homeRuns + 
-						"," + h.seasonStats.runsBattedIn;
+						"," + h.seasonStats.walks +  "," + h.seasonStats.runsBattedIn;
 				System.out.println(s);
 				bw.write(s);
 				bw.newLine();

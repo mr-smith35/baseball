@@ -128,21 +128,21 @@ public class BaseballGame {
 	}
 	
 	private void printScoreboard() {
-		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s\n", homeTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "RBIs");
+		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s\n", homeTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "BB", "HR", "RBIs");
 		for(int i = 0; i < homeTeam.hitters.length; i++) {
-			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s", (i+1) + ") " + homeTeam.hitters[i].name, homeTeam.hitters[i].stats.atBats,
-					homeTeam.hitters[i].stats.runs, homeTeam.hitters[i].stats.hits, homeTeam.hitters[i].stats.singles, homeTeam.hitters[i].stats.doubles,
-					homeTeam.hitters[i].stats.triples, homeTeam.hitters[i].stats.homeRuns, homeTeam.hitters[i].stats.runsBattedIn);
+			GameStats s1 = homeTeam.hitters[i].stats;
+			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s", (i+1) + ") " + homeTeam.hitters[i].name, 
+					s1.atBats, s1.runs, s1.hits, s1.singles, s1.doubles, s1.triples, s1.walks, s1.homeRuns, s1.runsBattedIn);
 			System.out.println();
 		}
 		
 		System.out.println();
 
-		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s\n", awayTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "RBIs");
+		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s\n", awayTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "BB", "HR", "RBIs");
 		for(int i = 0; i < awayTeam.hitters.length; i++) {
-			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s", (i+1) + ") " + awayTeam.hitters[i].name, awayTeam.hitters[i].stats.atBats,
-					awayTeam.hitters[i].stats.runs, awayTeam.hitters[i].stats.hits, awayTeam.hitters[i].stats.singles, awayTeam.hitters[i].stats.doubles,
-					awayTeam.hitters[i].stats.triples, awayTeam.hitters[i].stats.homeRuns, awayTeam.hitters[i].stats.runsBattedIn);
+			GameStats s2 = awayTeam.hitters[i].stats;
+			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s", (i+1) + ") " + awayTeam.hitters[i].name, awayTeam.hitters[i].stats.atBats,
+					s2.atBats, s2.runs, s2.hits, s2.singles, s2.doubles, s2.triples, s2.walks, s2.homeRuns, s2.runsBattedIn);
 			System.out.println();
 
 		}
@@ -150,29 +150,34 @@ public class BaseballGame {
 	
 	private void printSeasonStats() {
 		System.out.println("************************* Season Stats *************************");
-		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9s%-9s%-9s\n", homeTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "RBIs", "Avg", "Slugging", "OPS");
+		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9s%-9s%-9s%-9s\n", homeTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "BB", "RBIs", "Avg", "Slugging", "OBP", "OPS");
 		for(int i = 0; i < homeTeam.hitters.length; i++) {
-			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9.3f%-9.3f%-9.3f", (i+1) + ") " + homeTeam.hitters[i].name, homeTeam.hitters[i].seasonStats.atBats,
-					homeTeam.hitters[i].seasonStats.runs, homeTeam.hitters[i].seasonStats.hits, homeTeam.hitters[i].seasonStats.singles, homeTeam.hitters[i].seasonStats.doubles,
-					homeTeam.hitters[i].seasonStats.triples, homeTeam.hitters[i].seasonStats.homeRuns, homeTeam.hitters[i].seasonStats.runsBattedIn,
-					(double)homeTeam.hitters[i].seasonStats.hits/homeTeam.hitters[i].seasonStats.atBats, calculateSluggingAvg(homeTeam.hitters[i].seasonStats),
-																										calculateOPS(homeTeam.hitters[i].seasonStats));
+			SeasonStats s = homeTeam.hitters[i].seasonStats;
+			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9.3f%-9.3f%-9.3f%-9.3f", (i+1) + ") " + homeTeam.hitters[i].name, 
+					s.atBats, s.runs, s.hits, s.singles, s.doubles, s.triples, s.homeRuns, s.walks, s.runsBattedIn,
+					calculateBattingAvg(s), calculateSluggingAvg(s), calculateOBP(s), calculateOPS(s));
+																										
 			System.out.println();
 		}
 		
 		System.out.println();
 
-		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9s%-9s%-9s\n", awayTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "RBIs", "Avg", "Slugging", "OPS");
+		System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9s%-9s%-9s%-9s\n", awayTeam.teamName, "AB", "Runs", "Hits", "1B", "2B", "3B", "HR", "BB", "RBIs", "Avg", "Slugging", "OBP", "OPS");
 		for(int i = 0; i < awayTeam.hitters.length; i++) {
-			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9.3f%-9.3f%-9.3f", (i+1) + ") " + awayTeam.hitters[i].name, awayTeam.hitters[i].seasonStats.atBats,
-					awayTeam.hitters[i].seasonStats.runs, awayTeam.hitters[i].seasonStats.hits, awayTeam.hitters[i].seasonStats.singles, awayTeam.hitters[i].seasonStats.doubles,
-					awayTeam.hitters[i].seasonStats.triples, awayTeam.hitters[i].seasonStats.homeRuns, awayTeam.hitters[i].seasonStats.runsBattedIn,
-					(double)awayTeam.hitters[i].seasonStats.hits/awayTeam.hitters[i].seasonStats.atBats, calculateSluggingAvg(awayTeam.hitters[i].seasonStats),
-					calculateOPS(awayTeam.hitters[i].seasonStats));
+			SeasonStats s = awayTeam.hitters[i].seasonStats;
+
+			System.out.printf("%-20s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-5s%-9.3f%-9.3f%-9.3f%-9.3f", (i+1) + ") " + awayTeam.hitters[i].name, s.atBats,
+					s.runs, s.hits, s.singles, s.doubles, s.triples, s.homeRuns, s.walks, s.runsBattedIn,
+					calculateBattingAvg(s), calculateSluggingAvg(s), calculateOBP(s), calculateOPS(s));
+
 			System.out.println();
 
 		}
 		System.out.println("************************* End Season Stats *************************");
+	}
+	
+	private double calculateBattingAvg(SeasonStats s) {
+		return (double)s.hits/s.atBats;
 	}
 	
 	private double calculateSluggingAvg(SeasonStats s) {
@@ -180,8 +185,13 @@ public class BaseballGame {
 		return slugging;
 	}
 	
+	private double calculateOBP(SeasonStats s) {
+		double obp = (s.walks + s.hits)/(s.walks + s.atBats);
+		return obp;
+	}
+	
 	private double calculateOPS(SeasonStats s) {
-		double ops = (1*s.singles + 2*s.doubles + 3*s.triples + 4*s.homeRuns)/(double)s.atBats + (double)s.hits/s.atBats;
+		double ops = calculateSluggingAvg(s) + calculateOBP(s);
 		return ops;
 	}
 
@@ -220,6 +230,9 @@ public class BaseballGame {
 				System.out.println(diamond);
 
 				int result = calculateResult(homeTeam.hitters[currentBatterHome], awayTeamPitcher);
+				if(result == WALK) {
+					System.out.println("stop here");				
+				}
 				if(result == OUT) {
 					numberOfOuts++;
 				}
@@ -253,6 +266,9 @@ public class BaseballGame {
 				System.out.println(diamond);
 
 				int result = calculateResult(awayTeam.hitters[currentBatterAway], homeTeamPitcher);
+				if(result == WALK) {
+					System.out.println("stop here");				
+				}
 				if(result == OUT) {
 					numberOfOuts++;
 				}
@@ -300,7 +316,77 @@ public class BaseballGame {
 	}
 
 	private void advanceBaseRunners(int result, boolean[] basesOccupied, Hitter[] playersOnBase, Hitter currentBatter, boolean isHomeTeam) {
-		if(result == SINGLE) {  // just move all runners up one base.
+		if(result == WALK) {
+			System.out.println("stop here");
+			// Different than single, b/c runners don't advance if not forced 
+			// Possibilities: 
+			// (3) Runners on (bases loaded)
+			//    (a) 1st, 2nd, and 3rd --> Runner to Home, Runner to 3rd, Runner to 2nd, Batter to 1st
+			if(basesOccupied[THIRD_BASE] && basesOccupied[SECOND_BASE] && basesOccupied[FIRST_BASE]) {
+				if(isHomeTeam) {
+					incrementScore(true);
+				}
+				else {
+					incrementScore(false);
+				}
+				playersOnBase[THIRD_BASE] = playersOnBase[SECOND_BASE]; // guy on 2nd advances to third
+				playersOnBase[SECOND_BASE] = playersOnBase[FIRST_BASE]; // guy on 1st advances to second
+				playersOnBase[FIRST_BASE] = currentBatter;   // guy who walked now on first
+				return;
+			}
+			// (2) Runners on
+			//    (a) 1st and 2nd --> Runner to 3rd, Runner to 2nd, Batter to 1st (bases now loaded)
+
+			else if(basesOccupied[FIRST_BASE] && basesOccupied[SECOND_BASE]) {
+				playersOnBase[THIRD_BASE] = playersOnBase[SECOND_BASE]; // guy on 2nd advances to third
+				playersOnBase[SECOND_BASE] = playersOnBase[FIRST_BASE]; // guy on 1st advances to second
+				playersOnBase[FIRST_BASE] = currentBatter;   // guy who walked now on first
+				basesOccupied[THIRD_BASE] = true;  // 1st and 2nd were already marked true, now mark 3rd as true
+				return;
+			}
+			//    (b) 1st and 3rd --> Runner to 2nd, Batter to 1st (bases now loaded)
+			else if(basesOccupied[FIRST_BASE] && basesOccupied[THIRD_BASE]) {
+				playersOnBase[SECOND_BASE] = playersOnBase[FIRST_BASE]; // guy on 1st advances to second
+				playersOnBase[FIRST_BASE] = currentBatter;   // guy who walked now on first
+				basesOccupied[SECOND_BASE] = true;  // 1st and 3rd were already marked true, now mark 2bd  as true
+				return;
+			}
+			//    (b) 2nd and 3rd --> Runner to 2nd, Batter to 1st
+			else if(basesOccupied[SECOND_BASE] && basesOccupied[THIRD_BASE]) {
+				playersOnBase[FIRST_BASE] = currentBatter;   // guy who walked now on first
+				basesOccupied[FIRST_BASE] = true;  // 1st and 3rd were already marked true, now mark 1st  as true
+				return;
+			}
+			
+			// (1) Runner on
+			//    (a) 1st only --> Runner to 2nd, Batter to 1st
+			else if(basesOccupied[FIRST_BASE] && !basesOccupied[SECOND_BASE] && !basesOccupied[THIRD_BASE]) {
+				playersOnBase[SECOND_BASE] = playersOnBase[FIRST_BASE]; // guy on 1st advances to second
+				playersOnBase[FIRST_BASE] = currentBatter;   // guy who walked now on first
+				basesOccupied[SECOND_BASE] = true;  // 1st and 3rd were already marked true, now mark 2bd  as true
+				return;
+			}
+			//    (b) 2nd only --> Batter to 1st
+			else if(!basesOccupied[FIRST_BASE] && basesOccupied[SECOND_BASE] && !basesOccupied[THIRD_BASE]) {
+				playersOnBase[FIRST_BASE] = currentBatter;   // guy who walked now on first
+				basesOccupied[FIRST_BASE] = true;  // 1st and 3rd were already marked true, now mark 2bd  as true
+				return;
+			}
+			//    (c) 3rd only --> Batter to 1st
+			else if(!basesOccupied[FIRST_BASE] && !basesOccupied[SECOND_BASE] && basesOccupied[THIRD_BASE]) {
+				playersOnBase[FIRST_BASE] = currentBatter;   // guy who walked now on first
+				basesOccupied[FIRST_BASE] = true;  // 1st and 3rd were already marked true, now mark 2bd  as true
+				return;
+			}
+			// (0) Runners on
+			else if(!basesOccupied[FIRST_BASE] && !basesOccupied[SECOND_BASE] && !basesOccupied[THIRD_BASE]) {
+				playersOnBase[FIRST_BASE] = currentBatter;   // guy who walked now on first
+				basesOccupied[FIRST_BASE] = true;  // 1st and 3rd were already marked true, now mark 2bd  as true
+				return;
+			}
+			
+		}
+		else if(result == SINGLE) {  // just move all runners up one base.
 			if(basesOccupied[THIRD_BASE]) {
 				basesOccupied[THIRD_BASE] = false;
 				playersOnBase[THIRD_BASE].stats.runs++; 
@@ -486,10 +572,14 @@ public class BaseballGame {
 		//System.out.println("pitcherSkillFactor: " + pitcherSkillFactor);3
 		//System.out.println("adjustedBattingAverage: " + adjustedBattingAverage);
 		
-		h.stats.atBats++;  
+		h.stats.atBats = h.stats.atBats + 1;
 
 		if(isWalk(p)) {
-
+			System.out.println("...And " + p.name + " WALKS " + h.name + "!!");
+			// p.walks = p.walks + 1;
+			h.stats.atBats = h.stats.atBats - 1;
+			h.stats.walks = h.stats.walks + 1;
+			return WALK;
 		}
 		else if(rand < adjustedBattingAverage) { // it's a hit
 			h.stats.hits++;
@@ -518,11 +608,11 @@ public class BaseballGame {
 			return SINGLE;
 		}
 		else {  //it's an out
-			int rand = (int)(Math.random()*3);
-			if(rand == 0) {
+			int r = (int)(Math.random()*3);
+			if(r == 0) {
 				System.out.println(h.name + " grounds out!");
 			}
-			else if(rand == 1) {
+			else if(r == 1) {
 				System.out.println(h.name + " flies out!");
 			}
 			else {
@@ -535,7 +625,21 @@ public class BaseballGame {
 	}
 
 	private boolean isWalk(Pitcher p){
-		
+		int rand = (int)(Math.random() * 100) + 1; // random integer between 1 - 100
+		// 0 control --> 16% of the time walk
+		// 25 control --> 12% of the time walk
+		// 50 control --> 8% of the time walk
+		// 75 control --> 4% of the time walk
+		// 100 control --> 0% of the time walk
+		// so, each extra point should subtract 0.16 from the chance you walk.
+		double percentChanceOfWalk = 16 - p.control*0.16;
+		//System.out.println("@@@@@@ percentChanceOfWalk: " + percentChanceOfWalk + " rand " + rand);
+		if(rand < percentChanceOfWalk) {
+			return true; // it's a walk
+		}
+		else {
+			return false;
+		}
 	}
 	
 	private String getRandomAdjective() {

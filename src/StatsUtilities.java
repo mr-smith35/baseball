@@ -5,6 +5,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public class StatsUtilities {
+	
+	final static int NUM_OF_LEAGUE_STATS_PER_TEAM = 4;  //games, wins, last10, (streak can be derived), last 3 pitchers
+		
+	
 	public static void readSeasonStats(Team home, Team away) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(home.teamName));
@@ -99,9 +103,7 @@ public class StatsUtilities {
 		return new SeasonStats(ab, hits, singles, doubles, triples, hrs, walks, rbis, runs);
 	}
 	
-	public static void printSeasonStats(Team home, Team away) {
-		
-	}
+
 	
 	public static void updateSeasonStats(Team home, Team away) {
 
@@ -193,18 +195,35 @@ public class StatsUtilities {
 	public static void readLeagueStats(Team home, Team away) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(home.teamName + "LeagueData.txt"));
-			
-			String statLine;
-			for(int i = 0; i < home.hitters.length; i++) {
-				statLine = br.readLine();
 
-				SeasonStats s = parseLeagueStats(statLine);
-				// Do something with League Stats here, set them? 
-			} 
+			String statLine;
+			statLine = br.readLine();
+			// don't need to call subroutine here, b/c only one stat per line
+			int colon = statLine.indexOf(':');
+			int games = Integer.parseInt(statLine.substring(colon+1));
+			System.out.println("***games " + games);
+
+			statLine = br.readLine();
+			// just set the stats, don't need to return anything
+			colon = statLine.indexOf(':');
+			int wins = Integer.parseInt(statLine.substring(colon+1));
+			System.out.println("***wins " + wins);
+	
+			statLine = br.readLine();
+			colon = statLine.indexOf(':');
+			String[] last10 = getLast10(statLine.substring(colon+1));
+			System.out.println("***last10 " + java.util.Arrays.toString(last10));
+			
+			statLine = br.readLine();
+			colon = statLine.indexOf(':');
+			String[] last3Pitchers = getLast3(statLine.substring(colon+1));
+			System.out.println("***last3Pitchers " + java.util.Arrays.toString(last3Pitchers));
+			
+			// Do something with League Stats here, set them? 
 
 		} catch (Exception e) {
 			System.out.println("##### No league file detected, starting new league file for " + home.teamName);
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		
 		try {
@@ -229,27 +248,45 @@ public class StatsUtilities {
 	}
 
 
-	private static LeagueStats parseLeagueStats(String statLine) {
-		/*Games:270
-		Wins:42
-		L10:[l,l,l,l,l,l,l,l,l,w]
-		Streak:L9
-		Last3:[Slowball Sue, Quad Strikey, Strikey]*/
-		// TODO Auto-generated method stub
-		
-		comma = s.indexOf(',');
-		int walks = Integer.parseInt(s.substring(0, comma));
-		//System.out.println("***walks " + rbis);
+	private static String[] getLast3(String s) {
+		// "[Slowball Sue, Quad Strikey, Strikey]"
+		int comma = s.indexOf(',');
+		String p1 = s.substring(1, comma).trim();
 		s = s.substring(comma + 1);
 		
+		// " Quad Strikey, Strikey]"
 		comma = s.indexOf(',');
-		int rbis = Integer.parseInt(s.substring(0));
-		//System.out.println("***rbis " + rbis);
+		String p2 = s.substring(0, comma).trim();
 		s = s.substring(comma + 1);
-		 
-		//int atBats, int hits, int singles, int doubles, int triples, int hrs, int bbs, int rbis,int runs  ***?? order
-		return new LeagueStatss(games, wins, last10Wins, String streak, String[] last3GamePitchers);
+
+		// ", Strikey]"
+		String p3 = s.substring(0, s.length() - 1).trim(); // -1 to eliminate the ]
+		
+		return new String[] {p1,p2,p3};
+		
 	}
+
+
+	private static String[] getLast10(String s) {
+		// "[l,l,l,l,l,l,l,l,l,w]"
+		//  01234567
+		String[] last10 = new String[10];
+		last10[0] = (s.substring(1,2).equals("w")) ? "w" : "l";
+		last10[1] = (s.substring(3,4).equals("w")) ? "w" : "l";
+		last10[2] = (s.substring(5,6).equals("w")) ? "w" : "l";
+		last10[3] = (s.substring(7,8).equals("w")) ? "w" : "l";
+		last10[4] = (s.substring(9,10).equals("w")) ? "w" : "l";
+		last10[5] = (s.substring(11,12).equals("w")) ? "w" : "l";
+		last10[6] = (s.substring(13,14).equals("w")) ? "w" : "l";
+		last10[7] = (s.substring(15,16).equals("w")) ? "w" : "l";
+		last10[8] = (s.substring(17,18).equals("w")) ? "w" : "l";
+		last10[9] = (s.substring(19,20).equals("w")) ? "w" : "l";
+
+		return last10;
+	}
+
+
+
 
 	
 }

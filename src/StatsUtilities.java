@@ -189,5 +189,67 @@ public class StatsUtilities {
 
 	}
 
+
+	public static void readLeagueStats(Team home, Team away) {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(home.teamName + "LeagueData.txt"));
+			
+			String statLine;
+			for(int i = 0; i < home.hitters.length; i++) {
+				statLine = br.readLine();
+
+				SeasonStats s = parseLeagueStats(statLine);
+				// Do something with League Stats here, set them? 
+			} 
+
+		} catch (Exception e) {
+			System.out.println("##### No league file detected, starting new league file for " + home.teamName);
+			//e.printStackTrace();
+		}
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(away.teamName));
+			
+			String statLine;
+			for(int i = 0; i < away.hitters.length; i++) {
+				statLine = br.readLine();
+
+				SeasonStats s = parseStats(statLine);
+				away.hitters[i].setSeasonStats(s);
+			} 
+
+		} catch (Exception e) {
+			System.out.println("##### No season file detected, starting new season file for " + away.teamName);
+			//e.printStackTrace();
+		}
+		
+		// Read in League-wide stats (games, w-l)
+		
+		
+	}
+
+
+	private static LeagueStats parseLeagueStats(String statLine) {
+		/*Games:270
+		Wins:42
+		L10:[l,l,l,l,l,l,l,l,l,w]
+		Streak:L9
+		Last3:[Slowball Sue, Quad Strikey, Strikey]*/
+		// TODO Auto-generated method stub
+		
+		comma = s.indexOf(',');
+		int walks = Integer.parseInt(s.substring(0, comma));
+		//System.out.println("***walks " + rbis);
+		s = s.substring(comma + 1);
+		
+		comma = s.indexOf(',');
+		int rbis = Integer.parseInt(s.substring(0));
+		//System.out.println("***rbis " + rbis);
+		s = s.substring(comma + 1);
+		 
+		//int atBats, int hits, int singles, int doubles, int triples, int hrs, int bbs, int rbis,int runs  ***?? order
+		return new LeagueStatss(games, wins, last10Wins, String streak, String[] last3GamePitchers);
+	}
+
 	
 }

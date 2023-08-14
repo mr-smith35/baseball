@@ -37,6 +37,7 @@ public class BaseballGame {
 		System.out.println("The visting team is The " + awayTeam.teamName);
 		//SeasonStats.updateSeasonStats(homeTeam, awayTeam);
 		StatsUtilities.readSeasonStats(homeTeam, awayTeam);
+		StatsUtilities.readLeagueStats(homeTeam, awayTeam);
 
 		choosePitchers();
 

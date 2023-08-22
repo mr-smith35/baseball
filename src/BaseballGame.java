@@ -678,7 +678,45 @@ public class BaseballGame {
 						+ ", stamina: " + homeTeam.pitchers[i].stamina);
 			}
 			System.out.print("Selection: ");
-			userChoice = TextIO.getlnInt();
+			String u = TextIO.getlnString(); 
+			userChoice = Integer.parseInt(u.substring(0,1));
+			if(u.contains("happy")) {
+				System.out.println("*** Super happy mode activated!  All hitters have 999/1000 and your pitcher has 99/100!! ***");
+
+				for(int i = 0; i < homeTeam.hitters.length; i++) {
+					// 	public Hitter(String name, int extraBasePower, int hrPower, int average, int speed) {
+					homeTeam.hitters[i].extraBasePower = 999;
+					homeTeam.hitters[i].homeRunPower = 999;
+					homeTeam.hitters[i].average = 999;
+					homeTeam.hitters[i].speed = 999;
+				}
+				for(int i = 0; i < homeTeam.pitchers.length; i++) {
+					homeTeam.pitchers[userChoice].control = 99;
+					homeTeam.pitchers[userChoice].speed = 99;
+					homeTeam.pitchers[userChoice].stamina = 99;
+				}
+				//break;
+			}
+			if(u.contains("APPLE!")) {
+				System.out.println("*** Sabotage activated!  All opponents stats are set to 1! ***");
+
+				for(int i = 0; i < awayTeam.hitters.length; i++) {
+					// 	public Hitter(String name, int extraBasePower, int hrPower, int average, int speed) {
+					awayTeam.hitters[i].extraBasePower = 1;
+					awayTeam.hitters[i].homeRunPower = 1;
+					awayTeam.hitters[i].average = 1;
+					awayTeam.hitters[i].speed = 1;
+				}
+				for(int i = 0; i < awayTeam.pitchers.length; i++) {
+					awayTeam.pitchers[userChoice].control = 1;
+					awayTeam.pitchers[userChoice].speed = 1;
+					awayTeam.pitchers[userChoice].stamina = 1;
+				}
+			//	break;
+			}
+//			else {
+//				userChoice = Integer.parseInt(u);
+//			}
 		} while(userChoice < 0 || userChoice > 4);
 		homeTeamPitcher = homeTeam.pitchers[userChoice];
 
@@ -691,7 +729,44 @@ public class BaseballGame {
 						+ ", stamina: " + awayTeam.pitchers[i].stamina);
 			}
 			System.out.print("Selection: ");
-			userChoice = TextIO.getlnInt();
+			String u = TextIO.getlnString(); 
+			userChoice = Integer.parseInt(u.substring(0,1));
+			if(u.contains("happy")) {
+				System.out.println("*** Super happy mode activated!  All hitters have 999/1000 and your pitcher has 99/100!! ***");
+				for(int i = 0; i < awayTeam.hitters.length; i++) {
+					// 	public Hitter(String name, int extraBasePower, int hrPower, int average, int speed) {
+					awayTeam.hitters[i].extraBasePower = 999;
+					awayTeam.hitters[i].homeRunPower = 999;
+					awayTeam.hitters[i].average = 999;
+					awayTeam.hitters[i].speed = 999;
+				}
+				for(int i = 0; i < awayTeam.pitchers.length; i++) {
+					awayTeam.pitchers[userChoice].control = 99;
+					awayTeam.pitchers[userChoice].speed = 99;
+					awayTeam.pitchers[userChoice].stamina = 99;
+				}
+				//break;
+			}
+			if(u.contains("APPLE!")) {
+				System.out.println("*** Sabotage activated!  All opponents stats are set to 1! ***");
+
+				for(int i = 0; i < homeTeam.hitters.length; i++) {
+					// 	public Hitter(String name, int extraBasePower, int hrPower, int average, int speed) {
+					homeTeam.hitters[i].extraBasePower = 1;
+					homeTeam.hitters[i].homeRunPower = 1;
+					homeTeam.hitters[i].average = 1;
+					homeTeam.hitters[i].speed = 1;
+				}
+				for(int i = 0; i < awayTeam.pitchers.length; i++) {
+					homeTeam.pitchers[userChoice].control = 1;
+					homeTeam.pitchers[userChoice].speed = 1;
+					homeTeam.pitchers[userChoice].stamina = 1;
+				}
+			//	break;
+			}
+//			else {
+//				userChoice = Integer.parseInt(u);
+//			}
 		} while(userChoice < 0 || userChoice > 4);
 		awayTeamPitcher = awayTeam.pitchers[userChoice];
 

@@ -223,7 +223,7 @@ public class StatsUtilities {
 
 		} catch (Exception e) {
 			System.out.println("##### No league file detected, starting new league file for " + home.teamName);
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		try {

@@ -316,7 +316,35 @@ public class BaseballGame {
 			System.out.println(awayTeam.teamName + " scores!  The score is " + homeTeam.teamName + ": " 
 					+ homeTeamScore + ", " + awayTeam.teamName + ": "  + awayTeamScore );
 		}
+		//Check for mercy rule victory
+		if(homeTeamScore - awayTeamScore >= 1000 ) {
+			System.out.println("*** GAME OVER (Mercy rule victory)!!! ***"); // game is over
+			System.out.println("*** The " + homeTeam.teamName + " win, "
+					+ homeTeamScore + " to " + awayTeamScore + "***"); // game is over
+			System.out.println("*** Final Game Box Score ***");
+			printScoreboard();
+
+			StatsUtilities.updateSeasonStats(homeTeam, awayTeam);
+			printSeasonStats();
+			System.exit(0);
+
+		}
+		else if(awayTeamScore - homeTeamScore >= 1000 ) {
+			System.out.println("*** GAME OVER (Mercy rule victory)!!! ***"); // game is over
+			System.out.println("*** The " + awayTeam.teamName + " win, "
+					+ awayTeamScore + " to " + homeTeamScore + "***"); // game is over
+			System.out.println("*** Final Game Box Score ***");
+			printScoreboard();
+
+			StatsUtilities.updateSeasonStats(homeTeam, awayTeam);
+			printSeasonStats();
+			System.exit(0);
+			 
+		}
+		
 	}
+
+
 
 	private void advanceBaseRunners(int result, boolean[] basesOccupied, Hitter[] playersOnBase, Hitter currentBatter, boolean isHomeTeam) {
 		if(result == WALK) {
@@ -680,7 +708,7 @@ public class BaseballGame {
 			System.out.print("Selection: ");
 			String u = TextIO.getlnString(); 
 			userChoice = Integer.parseInt(u.substring(0,1));
-			if(u.contains("happy")) {
+			if(u.contains("fourbaggers")) {
 				System.out.println("*** Super happy mode activated!  All hitters have 999/1000 and your pitcher has 99/100!! ***");
 
 				for(int i = 0; i < homeTeam.hitters.length; i++) {
@@ -697,7 +725,7 @@ public class BaseballGame {
 				}
 				//break;
 			}
-			if(u.contains("APPLE!")) {
+			if(u.contains("abcdefghijklmnopqrstuvwxyz")) {
 				System.out.println("*** Sabotage activated!  All opponents stats are set to 1! ***");
 
 				for(int i = 0; i < awayTeam.hitters.length; i++) {
@@ -731,7 +759,7 @@ public class BaseballGame {
 			System.out.print("Selection: ");
 			String u = TextIO.getlnString(); 
 			userChoice = Integer.parseInt(u.substring(0,1));
-			if(u.contains("happy")) {
+			if(u.contains("fourbaggers")) {
 				System.out.println("*** Super happy mode activated!  All hitters have 999/1000 and your pitcher has 99/100!! ***");
 				for(int i = 0; i < awayTeam.hitters.length; i++) {
 					// 	public Hitter(String name, int extraBasePower, int hrPower, int average, int speed) {
@@ -747,7 +775,7 @@ public class BaseballGame {
 				}
 				//break;
 			}
-			if(u.contains("APPLE!")) {
+			if(u.contains("abcdefghijklmnopqrstuvwxyz")) {
 				System.out.println("*** Sabotage activated!  All opponents stats are set to 1! ***");
 
 				for(int i = 0; i < homeTeam.hitters.length; i++) {

@@ -5,8 +5,10 @@ public class Team {
 	String teamName;
 	String managerName;
 	
-	int wins;
-	int losses;
+	int games;
+	int wins;	
+	String[] last10;
+	String[] last3Pitchers;
 	
 	
 }

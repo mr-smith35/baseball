@@ -37,7 +37,7 @@ public class BaseballGame {
 		System.out.println("The visting team is The " + awayTeam.teamName);
 		//SeasonStats.updateSeasonStats(homeTeam, awayTeam);
 		StatsUtilities.readSeasonStats(homeTeam, awayTeam);
-		StatsUtilities.readLeagueStats(homeTeam, awayTeam);
+		StatsUtilities.readTeamStats(homeTeam, awayTeam);
 
 		choosePitchers();
 
@@ -252,6 +252,8 @@ public class BaseballGame {
 					printScoreboard();
 				
 					StatsUtilities.updateSeasonStats(homeTeam, awayTeam);
+					StatsUtilities.updateTeamStatsAfterGame(homeTeam, awayTeam, homeTeamPitcher, awayTeamPitcher, true);
+					
 					printSeasonStats();
 					
 					System.exit(0); // stop program
@@ -700,10 +702,40 @@ public class BaseballGame {
 		do {
 			System.out.println("***Home Team, select your pitcher***");
 
-			for(int i = 0; i < homeTeam.pitchers.length; i++) {
-				System.out.println(i + ": " + homeTeam.pitchers[i].name + ", control: " 
+			for(int i = 0; i < homeTeam.pitchers.length; i++) {				
+				if(homeTeam.pitchers[i].name.equals(homeTeam.last3Pitchers[0])) {
+					homeTeam.pitchers[i].control = (int) (homeTeam.pitchers[i].control*0.5);
+					homeTeam.pitchers[i].speed = (int) (homeTeam.pitchers[i].speed*0.5);
+					homeTeam.pitchers[i].stamina = (int) (homeTeam.pitchers[i].stamina*0.5);
+				}
+				if(homeTeam.pitchers[i].name.equals(homeTeam.last3Pitchers[1])) {
+					homeTeam.pitchers[i].control = (int) (homeTeam.pitchers[i].control*0.75);
+					homeTeam.pitchers[i].speed = (int) (homeTeam.pitchers[i].speed*0.75);
+					homeTeam.pitchers[i].stamina = (int) (homeTeam.pitchers[i].stamina*0.75);
+				}
+				if(homeTeam.pitchers[i].name.equals(homeTeam.last3Pitchers[2])) {
+					homeTeam.pitchers[i].control = (int) (homeTeam.pitchers[i].control*0.90);
+					homeTeam.pitchers[i].speed = (int) (homeTeam.pitchers[i].speed*0.90);
+					homeTeam.pitchers[i].stamina = (int) (homeTeam.pitchers[i].stamina*0.90);
+				}
+		
+				System.out.print(i + ": " + homeTeam.pitchers[i].name + ", control: " 
 						+ homeTeam.pitchers[i].control + ", speed: " + homeTeam.pitchers[i].speed 
 						+ ", stamina: " + homeTeam.pitchers[i].stamina);
+				
+				if(homeTeam.pitchers[i].name.equals(homeTeam.last3Pitchers[0])) {
+					System.out.println(" ##0 games rest!##");
+				}
+				else if(homeTeam.pitchers[i].name.equals(homeTeam.last3Pitchers[1])) {
+					System.out.println(" ##1 games rest!##");
+				}
+				else if(homeTeam.pitchers[i].name.equals(homeTeam.last3Pitchers[2])) {
+					System.out.println(" ##2 games rest!##");
+				}
+				else {
+					System.out.println();
+				}
+
 			}
 			System.out.print("Selection: ");
 			String u = TextIO.getlnString(); 
@@ -736,9 +768,9 @@ public class BaseballGame {
 					awayTeam.hitters[i].speed = 1;
 				}
 				for(int i = 0; i < awayTeam.pitchers.length; i++) {
-					awayTeam.pitchers[userChoice].control = 1;
-					awayTeam.pitchers[userChoice].speed = 1;
-					awayTeam.pitchers[userChoice].stamina = 1;
+					awayTeam.pitchers[i].control = 1;
+					awayTeam.pitchers[i].speed = 1;
+					awayTeam.pitchers[i].stamina = 1;
 				}
 			//	break;
 			}
@@ -749,12 +781,39 @@ public class BaseballGame {
 		homeTeamPitcher = homeTeam.pitchers[userChoice];
 
 		do {
-			System.out.println("***Away Team, select your pitcher***");
-
-			for(int i = 0; i < awayTeam.pitchers.length; i++) {
-				System.out.println(i + ": " + awayTeam.pitchers[i].name + ", control: " 
+			for(int i = 0; i < awayTeam.pitchers.length; i++) {				
+				if(awayTeam.pitchers[i].name.equals(awayTeam.last3Pitchers[0])) {
+					awayTeam.pitchers[i].control = (int) (awayTeam.pitchers[i].control*0.5);
+					awayTeam.pitchers[i].speed = (int) (awayTeam.pitchers[i].speed*0.5);
+					awayTeam.pitchers[i].stamina = (int) (awayTeam.pitchers[i].stamina*0.5);
+				}
+				if(awayTeam.pitchers[i].name.equals(awayTeam.last3Pitchers[1])) {
+					awayTeam.pitchers[i].control = (int) (awayTeam.pitchers[i].control*0.75);
+					awayTeam.pitchers[i].speed = (int) (awayTeam.pitchers[i].speed*0.75);
+					awayTeam.pitchers[i].stamina = (int) (awayTeam.pitchers[i].stamina*0.75);
+				}
+				if(awayTeam.pitchers[i].name.equals(awayTeam.last3Pitchers[2])) {
+					awayTeam.pitchers[i].control = (int) (awayTeam.pitchers[i].control*0.90);
+					awayTeam.pitchers[i].speed = (int) (awayTeam.pitchers[i].speed*0.90);
+					awayTeam.pitchers[i].stamina = (int) (awayTeam.pitchers[i].stamina*0.90);
+				}
+		
+				System.out.print(i + ": " + awayTeam.pitchers[i].name + ", control: " 
 						+ awayTeam.pitchers[i].control + ", speed: " + awayTeam.pitchers[i].speed 
 						+ ", stamina: " + awayTeam.pitchers[i].stamina);
+				
+				if(awayTeam.pitchers[i].name.equals(awayTeam.last3Pitchers[0])) {
+					System.out.println(" ##0 games rest!##");
+				}
+				else if(awayTeam.pitchers[i].name.equals(awayTeam.last3Pitchers[1])) {
+					System.out.println(" ##1 games rest!##");
+				}
+				else if(awayTeam.pitchers[i].name.equals(awayTeam.last3Pitchers[2])) {
+					System.out.println(" ##2 games rest!##");
+				}
+				else {
+					System.out.println();
+				}
 			}
 			System.out.print("Selection: ");
 			String u = TextIO.getlnString(); 
@@ -769,9 +828,9 @@ public class BaseballGame {
 					awayTeam.hitters[i].speed = 999;
 				}
 				for(int i = 0; i < awayTeam.pitchers.length; i++) {
-					awayTeam.pitchers[userChoice].control = 99;
-					awayTeam.pitchers[userChoice].speed = 99;
-					awayTeam.pitchers[userChoice].stamina = 99;
+					awayTeam.pitchers[i].control = 99;
+					awayTeam.pitchers[i].speed = 99;
+					awayTeam.pitchers[i].stamina = 99;
 				}
 				//break;
 			}

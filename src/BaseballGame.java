@@ -64,6 +64,8 @@ public class BaseballGame {
 	
 		StatsUtilities.updateSeasonStats(homeTeam, awayTeam);
 		printSeasonStats();
+		StatsUtilities.updateTeamStatsAfterGame(homeTeam, awayTeam, homeTeamPitcher, awayTeamPitcher, true);
+		StatsUtilities.writeTeamStats(homeTeam, awayTeam);
 	}
 
 
@@ -253,7 +255,7 @@ public class BaseballGame {
 				
 					StatsUtilities.updateSeasonStats(homeTeam, awayTeam);
 					StatsUtilities.updateTeamStatsAfterGame(homeTeam, awayTeam, homeTeamPitcher, awayTeamPitcher, true);
-					
+					StatsUtilities.writeTeamStats(homeTeam, awayTeam);
 					printSeasonStats();
 					
 					System.exit(0); // stop program
@@ -300,6 +302,9 @@ public class BaseballGame {
 			
 			StatsUtilities.updateSeasonStats(homeTeam, awayTeam);
 			printSeasonStats();
+			
+			StatsUtilities.updateTeamStatsAfterGame(homeTeam, awayTeam, homeTeamPitcher, awayTeamPitcher, true);
+			StatsUtilities.writeTeamStats(homeTeam, awayTeam);
 
 			System.exit(0); // stop program
 		}
@@ -328,6 +333,8 @@ public class BaseballGame {
 
 			StatsUtilities.updateSeasonStats(homeTeam, awayTeam);
 			printSeasonStats();
+			StatsUtilities.updateTeamStatsAfterGame(homeTeam, awayTeam, homeTeamPitcher, awayTeamPitcher, true);
+			StatsUtilities.writeTeamStats(homeTeam, awayTeam);
 			System.exit(0);
 
 		}
@@ -340,6 +347,8 @@ public class BaseballGame {
 
 			StatsUtilities.updateSeasonStats(homeTeam, awayTeam);
 			printSeasonStats();
+			StatsUtilities.updateTeamStatsAfterGame(homeTeam, awayTeam, homeTeamPitcher, awayTeamPitcher, true);
+			StatsUtilities.writeTeamStats(homeTeam, awayTeam);
 			System.exit(0);
 			 
 		}

@@ -221,6 +221,7 @@ public class StatsUtilities {
 
 			//return new TeamStats(games, wins, last10, last3Pitchers); 
 			// just set the Team Stats in the two Team objects
+			home.games = games;
 			home.wins = wins;
 			home.last10 = last10;
 			home.last3Pitchers = last3Pitchers;
@@ -258,6 +259,7 @@ public class StatsUtilities {
 
 			//return new TeamStats(games, wins, last10, last3Pitchers); 
 			// just set the Team Stats in the two Team objects
+			away.games = games;
 			away.wins = wins;
 			away.last10 = last10;
 			away.last3Pitchers = last3Pitchers;
@@ -324,14 +326,15 @@ public class StatsUtilities {
 			// update last 10
 		}
 		homeTeam.games++;
-		homeTeam.last3Pitchers[0] = homeTeamPitcher.name;
-		homeTeam.last3Pitchers[1] = homeTeam.last3Pitchers[0];
 		homeTeam.last3Pitchers[2] = homeTeam.last3Pitchers[1];
+		homeTeam.last3Pitchers[1] = homeTeam.last3Pitchers[0];
+		homeTeam.last3Pitchers[0] = homeTeamPitcher.name;
+		
 
 		awayTeam.games++;
-		awayTeam.last3Pitchers[0] = awayTeamPitcher.name;
-		awayTeam.last3Pitchers[1] = awayTeam.last3Pitchers[0];
 		awayTeam.last3Pitchers[2] = awayTeam.last3Pitchers[1];
+		awayTeam.last3Pitchers[1] = awayTeam.last3Pitchers[0];
+		awayTeam.last3Pitchers[0] = awayTeamPitcher.name;
 	}
 
 	/** 
